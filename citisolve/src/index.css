@@ -233,6 +233,7 @@ button:focus-visible {
   background: var(--navy-primary);
   border-color: var(--navy-primary);
   font-weight: 600;
+  border-radius: 75px;
   box-shadow: 0 4px 14px rgba(18, 47, 84, 0.22);
 }
 
@@ -240,7 +241,25 @@ button:focus-visible {
   color: var(--text-white);
   background: var(--navy-hover);
   transform: translateY(-2px);
+  border-radius: 75px;
   box-shadow: 0 6px 18px rgba(18, 47, 84, 0.28);
+}
+
+/* 75px rounded pill borders for all active buttons */
+button:active,
+.btn:active,
+.btn-primary:active,
+.btn-secondary:active,
+.cta-btn:active,
+.login-btn:active,
+.register-btn:active,
+.auth-btn:active,
+.new-complaint-btn:active,
+.update-status-btn:active,
+.clear-filter-btn:active,
+.clear-filters-btn:active,
+.retry-btn:active {
+  border-radius: 75px;
 }
 
 .admin-link {
