@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitiSolve – React Project Documentation</title>
+    <style>
+        /* ============================================================
+           PDF-READY STYLING — Black & White, Times New Roman
+           ============================================================ */
+
+        @page {
+            size: A4;
+            margin: 25mm 20mm 25mm 20mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000000;
+            background: #ffffff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 25mm 20mm;
+        }
+
+        /* ---- COVER PAGE ---- */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 85vh;
+            text-align: center;
+            page-break-after: always;
+            border: 3px double #000;
+            padding: 60px 40px;
+        }
+
+        .cover-page h1 {
+            font-size: 28pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .cover-page .subtitle {
+            font-size: 16pt;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .doc-type {
+            font-size: 14pt;
+            font-weight: bold;
+            border: 1px solid #000;
+            padding: 8px 30px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .meta-info {
+            font-size: 11pt;
+            line-height: 2;
+        }
+
+        .cover-page .meta-info strong {
+            display: inline-block;
+            width: 140px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* ---- HEADINGS ---- */
+        h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+            padding-bottom: 6px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 16pt;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 14px;
+            margin-bottom: 6px;
+        }
+
+        /* ---- PARAGRAPHS ---- */
+        p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        /* ---- LISTS ---- */
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        /* ---- TABLE ---- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 6px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+
+        /* ---- CODE BLOCKS ---- */
+        code {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10pt;
+            background-color: #f0f0f0;
+            padding: 1px 4px;
+            border: 1px solid #ccc;
+        }
+
+        pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 9.5pt;
+            background-color: #f5f5f5;
+            border: 1px solid #000;
+            padding: 12px 15px;
+            margin: 12px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        /* ---- HORIZONTAL RULE ---- */
+        hr {
+            border: none;
+            border-top: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        /* ---- PAGE BREAKS ---- */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- TABLE OF CONTENTS ---- */
+        .toc {
+            page-break-after: always;
+        }
+
+        .toc h1 {
+            text-align: center;
+            border-bottom: none;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc > ul > li {
+            margin-bottom: 6px;
+            font-size: 12pt;
+        }
+
+        .toc ul ul {
+            margin-left: 25px;
+        }
+
+        .toc ul ul li {
+            font-size: 11pt;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* ---- FIGURE / DIAGRAM ---- */
+        .diagram-box {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10pt;
+            line-height: 1.4;
+            white-space: pre;
+            background: #fafafa;
+        }
+
+        .caption {
+            text-align: center;
+            font-style: italic;
+            font-size: 10pt;
+            margin-top: 4px;
+            margin-bottom: 15px;
+        }
+
+        /* ---- FOOTER NOTE ---- */
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 1px solid #000;
+            font-size: 10pt;
+            font-style: italic;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Print button (hidden on print) */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 13pt;
+            font-weight: bold;
+            background: #000;
+            color: #fff;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background: #333;
+        }
+
+        @media print {
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<!-- ================================================================
+     COVER PAGE
+     ================================================================ -->
+<div class="cover-page">
+    <h1>CitiSolve</h1>
+    <p class="subtitle">Civic Complaint Management System</p>
+    <p class="doc-type">PROJECT DOCUMENTATION</p>
+    <p class="subtitle">A React-Based Single Page Application</p>
+    <div class="meta-info">
+        <p><strong>Technology:</strong> React 19 + Vite 8</p>
+        <p><strong>Language:</strong> JavaScript (JSX)</p>
+        <p><strong>Routing:</strong> React Router DOM v7</p>
+        <p><strong>Date:</strong> August 2026</p>
+    </div>
+</div>
+
+<!-- ================================================================
+     TABLE OF CONTENTS
+     ================================================================ -->
+<div class="toc">
+    <h1>Table of Contents</h1>
+    <ul>
+        <li><strong>1.</strong> <a href="#sec1">Introduction &amp; Project Overview</a></li>
+        <li><strong>2.</strong> <a href="#sec2">Technology Stack</a></li>
+        <li><strong>3.</strong> <a href="#sec3">Project Structure &amp; Folder Organisation</a></li>
+        <li><strong>4.</strong> <a href="#sec4">Application Architecture &amp; Data Flow</a></li>
+        <li><strong>5.</strong> <a href="#sec5">Entry Points</a>
+            <ul>
+                <li>5.1 <a href="#sec5-1">index.html</a></li>
+                <li>5.2 <a href="#sec5-2">main.jsx</a></li>
+            </ul>
+        </li>
+        <li><strong>6.</strong> <a href="#sec6">Root Component – App.jsx</a></li>
+        <li><strong>7.</strong> <a href="#sec7">Components</a>
+            <ul>
+                <li>7.1 <a href="#sec7-1">NavBar Component</a></li>
+            </ul>
+        </li>
+        <li><strong>8.</strong> <a href="#sec8">Page Components</a>
+            <ul>
+                <li>8.1 <a href="#sec8-1">Home</a></li>
+                <li>8.2 <a href="#sec8-2">Login</a></li>
+                <li>8.3 <a href="#sec8-3">Register</a></li>
+                <li>8.4 <a href="#sec8-4">MyComplaints</a></li>
+                <li>8.5 <a href="#sec8-5">SubmitComplaints</a></li>
+            </ul>
+        </li>
+        <li><strong>9.</strong> <a href="#sec9">Context – UserContext</a></li>
+        <li><strong>10.</strong> <a href="#sec10">Services – API Configuration</a></li>
+        <li><strong>11.</strong> <a href="#sec11">Styling Architecture</a></li>
+        <li><strong>12.</strong> <a href="#sec12">React Hooks Used in the Project</a></li>
+        <li><strong>13.</strong> <a href="#sec13">Props Reference Table</a></li>
+        <li><strong>14.</strong> <a href="#sec14">Routing Configuration</a></li>
+        <li><strong>15.</strong> <a href="#sec15">State Management Overview</a></li>
+        <li><strong>16.</strong> <a href="#sec16">How to Run the Project</a></li>
+        <li><strong>17.</strong> <a href="#sec17">Summary &amp; Conclusion</a></li>
+    </ul>
+</div>
+
+<!-- ================================================================
+     SECTION 1: INTRODUCTION
+     ================================================================ -->
+<h1 id="sec1">1. Introduction &amp; Project Overview</h1>
+
+<p>
+    <strong>CitiSolve</strong> is a civic complaint management system designed to allow citizens to
+    submit, track, and manage complaints related to public services. The application provides a
+    user-friendly interface where citizens can register, log in, submit new complaints, and view the
+    status of their previously submitted complaints.
+</p>
+
+<p>
+    The project is built as a <strong>Single Page Application (SPA)</strong> using <strong>React.js</strong>,
+    which enables seamless navigation between different views without full-page reloads. The frontend
+    communicates with a backend REST API server running on <code>localhost:5000</code> for data persistence
+    and authentication.
+</p>
+
+<h3>Key Features</h3>
+<ul>
+    <li>User Registration and Login with token-based authentication</li>
+    <li>Submit new civic complaints</li>
+    <li>View and track personal complaint history</li>
+    <li>Responsive navigation bar with dynamic content based on login state</li>
+    <li>Client-side routing for a smooth single-page experience</li>
+</ul>
+
+<!-- ================================================================
+     SECTION 2: TECHNOLOGY STACK
+     ================================================================ -->
+<h1 id="sec2">2. Technology Stack</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Technology</th>
+            <th>Version</th>
+            <th>Purpose</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>React</td>
+            <td>19.2.8</td>
+            <td>UI library for building component-based interfaces</td>
+        </tr>
+        <tr>
+            <td>React DOM</td>
+            <td>19.2.8</td>
+            <td>Renders React components into the browser DOM</td>
+        </tr>
+        <tr>
+            <td>React Router DOM</td>
+            <td>7.18.2</td>
+            <td>Client-side routing and navigation</td>
+        </tr>
+        <tr>
+            <td>Axios</td>
+            <td>(configured)</td>
+            <td>HTTP client for API requests</td>
+        </tr>
+        <tr>
+            <td>Vite</td>
+            <td>8.2.0</td>
+            <td>Build tool and development server</td>
+        </tr>
+        <tr>
+            <td>ESLint</td>
+            <td>10.8.0</td>
+            <td>Code linting and quality enforcement</td>
+        </tr>
+        <tr>
+            <td>JavaScript (ES6+)</td>
+            <td>—</td>
+            <td>Programming language with JSX syntax</td>
+        </tr>
+        <tr>
+            <td>CSS3</td>
+            <td>—</td>
+            <td>Styling (vanilla CSS, component-scoped files)</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 3: PROJECT STRUCTURE
+     ================================================================ -->
+<h1 id="sec3">3. Project Structure &amp; Folder Organisation</h1>
+
+<pre>
+citisolve/
+├── index.html                  # HTML entry point
+├── package.json                # Project metadata &amp; dependencies
+├── vite.config.js              # Vite build configuration
+├── public/                     # Static public assets
+│   └── favicon.svg
+└── src/                        # Application source code
+    ├── main.jsx                # React DOM render entry point
+    ├── App.jsx                 # Root component with routing
+    ├── App.css                 # Global app-level styles
+    ├── index.css               # Base reset styles
+    ├── assets/                 # Static assets (images, icons)
+    ├── comonents/              # Reusable UI components
+    │   └── Navbar.jsx          #   → Navigation bar component
+    ├── pages/                  # Route-level page components
+    │   ├── Home.jsx            #   → Home page
+    │   ├── Login.jsx           #   → Login page with form
+    │   ├── Register.jsx        #   → Registration page
+    │   ├── MyComplaints.jsx    #   → User's complaint list
+    │   └── SubmitComplaints.jsx#   → New complaint form
+    ├── context/                # React Context providers
+    │   └── UserContext.jsx     #   → User authentication context
+    ├── services/               # API &amp; external service configs
+    │   └── api.js              #   → Axios instance setup
+    ├── routes/                 # Route definitions (reserved)
+    ├── styles/                 # CSS style files
+    │   └── Navbar.css          #   → Navbar-specific styles
+    └── utils/                  # Utility/helper functions (reserved)
+</pre>
+<p class="caption">Figure 1: Complete project directory structure</p>
+
+<h3>Folder Descriptions</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Folder</th>
+            <th>Purpose</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>src/comonents/</code></td>
+            <td>Contains reusable UI components that appear on multiple pages (e.g., NavBar)</td>
+        </tr>
+        <tr>
+            <td><code>src/pages/</code></td>
+            <td>Contains route-level components, each representing a full page view</td>
+        </tr>
+        <tr>
+            <td><code>src/context/</code></td>
+            <td>Contains React Context providers for global state management</td>
+        </tr>
+        <tr>
+            <td><code>src/services/</code></td>
+            <td>Contains API configurations and service layer abstractions</td>
+        </tr>
+        <tr>
+            <td><code>src/styles/</code></td>
+            <td>Contains component-specific CSS files</td>
+        </tr>
+        <tr>
+            <td><code>src/routes/</code></td>
+            <td>Reserved for route configuration files (currently unused)</td>
+        </tr>
+        <tr>
+            <td><code>src/utils/</code></td>
+            <td>Reserved for utility/helper functions (currently unused)</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 4: ARCHITECTURE
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec4">4. Application Architecture &amp; Data Flow</h1>
+
+<p>
+    The CitiSolve application follows a standard React SPA architecture with unidirectional data flow.
+    Below is a high-level diagram showing how the different layers of the application interact.
+</p>
+
+<div class="diagram-box">
+┌─────────────────────────────────────────────────────────────┐
+│                       BROWSER                               │
+│                                                             │
+│  index.html                                                 │
+│      └── &lt;div id="root"&gt;                                    │
+│              └── main.jsx                                   │
+│                    └── &lt;BrowserRouter&gt;                       │
+│                          └── &lt;App /&gt;                         │
+│                                │                            │
+│                    ┌───────────┴───────────┐                │
+│                    │                       │                │
+│              &lt;NavBar /&gt;              &lt;Routes&gt;               │
+│             (always visible)         (page swap)            │
+│                                          │                  │
+│                         ┌────┬────┬──────┴─────┐            │
+│                         │    │    │      │      │           │
+│                       Home Login Register My   Submit       │
+│                                         Comp  Comp         │
+│                                                             │
+│  ┌──────────────┐    ┌─────────────────┐                    │
+│  │ UserContext   │    │  services/api   │                    │
+│  │ (auth state)  │    │  (Axios → API)  │                    │
+│  └──────────────┘    └────────┬────────┘                    │
+│                               │                             │
+│                    ┌──────────▼──────────┐                  │
+│                    │  Backend REST API   │                  │
+│                    │  localhost:5000/api  │                  │
+│                    └────────────────────┘                   │
+└─────────────────────────────────────────────────────────────┘
+</div>
+<p class="caption">Figure 2: Application architecture diagram</p>
+
+<h3>Data Flow Explanation</h3>
+<ol>
+    <li>The browser loads <code>index.html</code>, which includes <code>main.jsx</code> as a module script.</li>
+    <li><code>main.jsx</code> wraps the entire application in <code>&lt;BrowserRouter&gt;</code> for client-side routing.</li>
+    <li>The <code>App</code> component renders the <code>NavBar</code> (persistent) and a <code>&lt;Routes&gt;</code> block (swaps page content based on URL).</li>
+    <li>Page components use React hooks (<code>useState</code>, <code>useNavigate</code>) to manage local state and navigation.</li>
+    <li>Authentication tokens are stored in <code>localStorage</code> and read by the <code>NavBar</code> to toggle login/logout UI.</li>
+    <li>The <code>api.js</code> service creates an Axios instance pointed at the backend for HTTP requests.</li>
+</ol>
+
+<!-- ================================================================
+     SECTION 5: ENTRY POINTS
+     ================================================================ -->
+<h1 id="sec5">5. Entry Points</h1>
+
+<h2 id="sec5-1">5.1 index.html</h2>
+<p><strong>File:</strong> <code>/index.html</code></p>
+<p>
+    This is the single HTML file served to the browser. It contains a <code>&lt;div id="root"&gt;</code>
+    element where the React application mounts itself. The Vite build tool injects the bundled
+    JavaScript via the <code>&lt;script type="module"&gt;</code> tag pointing to <code>src/main.jsx</code>.
+</p>
+
+<pre>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;link rel="icon" type="image/svg+xml" href="/favicon.svg" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;citisolve&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3>Key Concepts Used</h3>
+<table>
+    <thead>
+        <tr><th>Concept</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>&lt;div id="root"&gt;</code></td>
+            <td>The mount point where React renders the entire component tree</td>
+        </tr>
+        <tr>
+            <td><code>type="module"</code></td>
+            <td>Enables ES Module syntax (import/export) in the browser</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="sec5-2">5.2 main.jsx</h2>
+<p><strong>File:</strong> <code>/src/main.jsx</code></p>
+<p>
+    This is the JavaScript entry point that bootstraps the React application. It uses the
+    <code>createRoot</code> API from React 18+ to render the component tree into the DOM.
+</p>
+
+<pre>
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { BrowserRouter } from 'react-router-dom'
+
+createRoot(document.getElementById('root')).render(
+  &lt;BrowserRouter&gt;
+    &lt;App /&gt;
+  &lt;/BrowserRouter&gt;
+)
+</pre>
+
+<h3>Key Concepts Used</h3>
+<table>
+    <thead>
+        <tr><th>Concept</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>createRoot()</code></td>
+            <td>React 18+ API that creates a root for concurrent rendering</td>
+        </tr>
+        <tr>
+            <td><code>&lt;BrowserRouter&gt;</code></td>
+            <td>React Router component that enables client-side routing using the HTML5 History API</td>
+        </tr>
+        <tr>
+            <td><code>import './index.css'</code></td>
+            <td>Imports global CSS that applies base styles to the entire application</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 6: APP.JSX
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec6">6. Root Component – App.jsx</h1>
+<p><strong>File:</strong> <code>/src/App.jsx</code></p>
+<p><strong>Type:</strong> Functional Component</p>
+<p><strong>Props:</strong> None (root component)</p>
+
+<p>
+    The <code>App</code> component is the root of the application's component tree. It is responsible
+    for two primary tasks: rendering the persistent <code>NavBar</code> component and defining the
+    route configuration using React Router's <code>&lt;Routes&gt;</code> and <code>&lt;Route&gt;</code> components.
+</p>
+
+<pre>
+import { Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import MyComplaints from './pages/MyComplaints';
+import SubmitComplaints from './pages/SubmitComplaints';
+import NavBar from "./comonents/Navbar";
+
+function App() {
+    return (
+        &lt;div&gt;
+            &lt;NavBar /&gt;
+
+            &lt;Routes&gt;
+                &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+                &lt;Route path='/login' element={&lt;Login /&gt;} /&gt;
+                &lt;Route path="/register" element={&lt;Register /&gt;} /&gt;
+                &lt;Route path="/myComplaints" element={&lt;MyComplaints /&gt;} /&gt;
+                &lt;Route path="/submitComplaints" element={&lt;SubmitComplaints /&gt;} /&gt;
+            &lt;/Routes&gt;
+        &lt;/div&gt;
+    )
+}
+
+export default App;
+</pre>
+
+<h3>Components Used Inside App</h3>
+<table>
+    <thead>
+        <tr><th>Component</th><th>Role</th><th>Rendered By</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>&lt;NavBar /&gt;</code></td><td>Persistent navigation header</td><td>Always rendered above routes</td></tr>
+        <tr><td><code>&lt;Routes&gt;</code></td><td>Route container from React Router</td><td>Wraps all route definitions</td></tr>
+        <tr><td><code>&lt;Route&gt;</code></td><td>Individual route definition</td><td>Maps URL path to page component</td></tr>
+    </tbody>
+</table>
+
+<h3>React Router Concepts</h3>
+<table>
+    <thead>
+        <tr><th>Concept</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>&lt;Routes&gt;</code></td>
+            <td>A container that renders the first <code>&lt;Route&gt;</code> that matches the current URL</td>
+        </tr>
+        <tr>
+            <td><code>&lt;Route path="..." element={...}&gt;</code></td>
+            <td>Defines a mapping between a URL path and a React component to render</td>
+        </tr>
+        <tr>
+            <td><code>path="/"</code></td>
+            <td>Matches the root/home URL of the application</td>
+        </tr>
+        <tr>
+            <td><code>element={&lt;Component /&gt;}</code></td>
+            <td>The React element (JSX) to render when the path matches</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 7: COMPONENTS
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec7">7. Components</h1>
+
+<h2 id="sec7-1">7.1 NavBar Component</h2>
+<p><strong>File:</strong> <code>/src/comonents/Navbar.jsx</code></p>
+<p><strong>Type:</strong> Functional Component</p>
+<p><strong>Props:</strong> None</p>
+<p><strong>CSS File:</strong> <code>/src/styles/Navbar.css</code></p>
+
+<p>
+    The NavBar is a <strong>persistent component</strong> that appears at the top of every page. It
+    provides navigation links and conditionally renders login/logout UI based on the user's
+    authentication state stored in <code>localStorage</code>.
+</p>
+
+<pre>
+import React from "react";
+import { Link } from "react-router-dom";
+import '../styles/Navbar.css'
+
+const token = localStorage.getItem("token");
+const username = localStorage.getItem("username");
+
+function NavBar() {
+    return (
+        &lt;nav&gt;
+            &lt;div&gt;
+                &lt;Link to="/"&gt;
+                    &lt;h1&gt;🏛️ CitiSolve&lt;/h1&gt;
+                &lt;/Link&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;Link to="/SubmitComplaints"&gt;
+                    &lt;h2&gt;Submit Complaints&lt;/h2&gt;
+                &lt;/Link&gt;
+                &lt;Link to="/MyComplaints"&gt;
+                    &lt;h2&gt;My Complaints&lt;/h2&gt;
+                &lt;/Link&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                {token ? (
+                    &lt;&gt;
+                        &lt;h3&gt;Welcome {username}&lt;/h3&gt;
+                        &lt;button&gt;Logout&lt;/button&gt;
+                    &lt;/&gt;
+                ) : (
+                    &lt;&gt;
+                        &lt;Link to="/login"&gt;Login&lt;/Link&gt;
+                        &lt;Link to="/register"&gt;Register&lt;/Link&gt;
+                    &lt;/&gt;
+                )}
+            &lt;/div&gt;
+        &lt;/nav&gt;
+    )
+}
+
+export default NavBar;
+</pre>
+
+<h3>Key Concepts Used</h3>
+<table>
+    <thead>
+        <tr><th>Concept</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>&lt;Link to="..."&gt;</code></td>
+            <td>React Router component for client-side navigation without page reload. Replaces traditional <code>&lt;a href&gt;</code> tags.</td>
+        </tr>
+        <tr>
+            <td><code>localStorage.getItem()</code></td>
+            <td>Web Storage API to read persisted data. Used here to check authentication status.</td>
+        </tr>
+        <tr>
+            <td>Conditional Rendering (<code>? :</code>)</td>
+            <td>Ternary operator used in JSX to conditionally render different UI based on the <code>token</code> value.</td>
+        </tr>
+        <tr>
+            <td>Fragments (<code>&lt;&gt;...&lt;/&gt;</code>)</td>
+            <td>React Fragments allow grouping multiple elements without adding extra DOM nodes.</td>
+        </tr>
+        <tr>
+            <td>Inline Styles (<code>style={{}}</code>)</td>
+            <td>JavaScript objects passed as the <code>style</code> prop for component-level styling.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>NavBar Styling (Navbar.css)</h3>
+<pre>
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+nav div {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav h1, nav h2 { margin: 0; }
+nav a { text-decoration: none; color: black; }
+nav a:hover { color: #5b5fc7; }
+</pre>
+
+<h4>CSS Properties Explained</h4>
+<table>
+    <thead>
+        <tr><th>Property</th><th>Value</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>position: fixed</code></td><td>fixed</td><td>Keeps the navbar visible at the top during scrolling</td></tr>
+        <tr><td><code>z-index: 1000</code></td><td>1000</td><td>Ensures the navbar stays above all other content</td></tr>
+        <tr><td><code>box-shadow</code></td><td>0 2px 8px rgba(...)</td><td>Adds subtle shadow for visual depth</td></tr>
+        <tr><td><code>display: flex</code></td><td>flex</td><td>Enables flexible box layout for horizontal alignment</td></tr>
+        <tr><td><code>justify-content: space-between</code></td><td>space-between</td><td>Distributes items with equal space between them</td></tr>
+        <tr><td><code>gap: 25px</code></td><td>25px</td><td>Sets spacing between flex child elements</td></tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 8: PAGE COMPONENTS
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec8">8. Page Components</h1>
+
+<p>
+    Page components are the top-level views rendered by React Router based on the current URL path.
+    Each page is a standalone functional component stored in the <code>src/pages/</code> directory.
+</p>
+
+<h2 id="sec8-1">8.1 Home Page</h2>
+<p><strong>File:</strong> <code>/src/pages/Home.jsx</code></p>
+<p><strong>Route:</strong> <code>/</code></p>
+<p><strong>Props:</strong> None</p>
+<p><strong>Hooks Used:</strong> None</p>
+
+<pre>
+import React from "react";
+
+function Home() {
+    return (
+        &lt;h1&gt;Home&lt;/h1&gt;
+    )
+}
+
+export default Home;
+</pre>
+
+<p>
+    The Home component is the landing page of the application. It currently renders a simple heading.
+    This is the default route (<code>/</code>) and is displayed when users first visit the application.
+</p>
+
+<hr />
+
+<h2 id="sec8-2">8.2 Login Page</h2>
+<p><strong>File:</strong> <code>/src/pages/Login.jsx</code></p>
+<p><strong>Route:</strong> <code>/login</code></p>
+<p><strong>Props:</strong> None</p>
+<p><strong>Hooks Used:</strong> <code>useState</code>, <code>useNavigate</code></p>
+
+<p>
+    The Login page is the most feature-rich page component in the current project. It implements a
+    complete login form with controlled inputs, form submission handling, localStorage-based
+    authentication, and programmatic navigation.
+</p>
+
+<pre>
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = (e) =&gt; {
+        e.preventDefault();
+        localStorage.setItem("token", "dummy-jwt-token");
+        localStorage.setItem("username", email);
+        navigate("/");
+    };
+
+    return (
+        &lt;&gt;
+            &lt;form onSubmit={handleLogin}&gt;
+                &lt;input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) =&gt; setEmail(e.target.value)}
+                /&gt;
+                &lt;input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) =&gt; setPassword(e.target.value)}
+                /&gt;
+                &lt;button type="submit"&gt;Login&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/&gt;
+    );
+}
+
+export default Login;
+</pre>
+
+<h3>Detailed Breakdown of Login Component</h3>
+
+<h4>Hooks Used</h4>
+<table>
+    <thead>
+        <tr><th>Hook</th><th>Import</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>useState</code></td>
+            <td><code>from "react"</code></td>
+            <td>Creates reactive state variables for email and password form fields</td>
+        </tr>
+        <tr>
+            <td><code>useNavigate</code></td>
+            <td><code>from "react-router-dom"</code></td>
+            <td>Returns a navigate function for programmatic route changes</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>State Variables</h4>
+<table>
+    <thead>
+        <tr><th>State</th><th>Initial Value</th><th>Setter</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>email</code></td>
+            <td><code>""</code> (empty string)</td>
+            <td><code>setEmail</code></td>
+            <td>Stores the user's email input value</td>
+        </tr>
+        <tr>
+            <td><code>password</code></td>
+            <td><code>""</code> (empty string)</td>
+            <td><code>setPassword</code></td>
+            <td>Stores the user's password input value</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Event Handlers</h4>
+<table>
+    <thead>
+        <tr><th>Handler</th><th>Trigger</th><th>Actions Performed</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>handleLogin(e)</code></td>
+            <td><code>onSubmit</code> (form submission)</td>
+            <td>
+                1. Calls <code>e.preventDefault()</code> to prevent page reload<br/>
+                2. Stores a dummy JWT token in <code>localStorage</code><br/>
+                3. Stores the email as username in <code>localStorage</code><br/>
+                4. Navigates to the home page (<code>/</code>) using <code>navigate("/")</code>
+            </td>
+        </tr>
+        <tr>
+            <td><code>onChange</code> (email)</td>
+            <td>User types in email field</td>
+            <td>Calls <code>setEmail(e.target.value)</code> to update state</td>
+        </tr>
+        <tr>
+            <td><code>onChange</code> (password)</td>
+            <td>User types in password field</td>
+            <td>Calls <code>setPassword(e.target.value)</code> to update state</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Controlled Components Pattern</h4>
+<p>
+    The Login form uses the <strong>Controlled Components</strong> pattern, which is a core React concept.
+    In this pattern, the form input values are controlled by React state rather than by the DOM:
+</p>
+<ul>
+    <li>The <code>value</code> prop of each <code>&lt;input&gt;</code> is bound to a state variable (<code>email</code>, <code>password</code>)</li>
+    <li>The <code>onChange</code> event handler updates the state when the user types</li>
+    <li>React re-renders the component with the new state, keeping the input in sync</li>
+</ul>
+
+<hr />
+
+<h2 id="sec8-3">8.3 Register Page</h2>
+<p><strong>File:</strong> <code>/src/pages/Register.jsx</code></p>
+<p><strong>Route:</strong> <code>/register</code></p>
+<p><strong>Props:</strong> None</p>
+<p><strong>Hooks Used:</strong> None</p>
+
+<pre>
+import React from "react";
+
+function Register() {
+    return (
+        &lt;h1&gt;Register&lt;/h1&gt;
+    )
+}
+
+export default Register;
+</pre>
+
+<p>A placeholder page for user registration functionality. Currently renders only a heading.</p>
+
+<hr />
+
+<h2 id="sec8-4">8.4 MyComplaints Page</h2>
+<p><strong>File:</strong> <code>/src/pages/MyComplaints.jsx</code></p>
+<p><strong>Route:</strong> <code>/myComplaints</code></p>
+<p><strong>Props:</strong> None</p>
+<p><strong>Hooks Used:</strong> None</p>
+
+<pre>
+import React from "react";
+
+function MyComplaints() {
+    return (
+        &lt;h1&gt;MyComplaints&lt;/h1&gt;
+    )
+}
+
+export default MyComplaints;
+</pre>
+
+<p>A placeholder page intended to display the logged-in user's previously submitted complaints.</p>
+
+<hr />
+
+<h2 id="sec8-5">8.5 SubmitComplaints Page</h2>
+<p><strong>File:</strong> <code>/src/pages/SubmitComplaints.jsx</code></p>
+<p><strong>Route:</strong> <code>/submitComplaints</code></p>
+<p><strong>Props:</strong> None</p>
+<p><strong>Hooks Used:</strong> None</p>
+
+<pre>
+import React from "react";
+
+function SubmitComplaints() {
+    return (
+        &lt;h1&gt;SubmitComplaints&lt;/h1&gt;
+    )
+}
+
+export default SubmitComplaints;
+</pre>
+
+<p>A placeholder page intended to contain a form for submitting new civic complaints.</p>
+
+<!-- ================================================================
+     SECTION 9: CONTEXT
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec9">9. Context – UserContext</h1>
+<p><strong>File:</strong> <code>/src/context/UserContext.jsx</code></p>
+<p><strong>Status:</strong> Empty (placeholder for future implementation)</p>
+
+<p>
+    The <code>UserContext.jsx</code> file is reserved for implementing React's <strong>Context API</strong>
+    for global user state management. When implemented, it will provide authentication state
+    (user data, token) to all components without prop drilling.
+</p>
+
+<h3>What is React Context?</h3>
+<p>
+    React Context is a mechanism for passing data through the component tree without having to pass
+    props manually at every level. It consists of three parts:
+</p>
+
+<table>
+    <thead>
+        <tr><th>Part</th><th>API</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Context Object</td>
+            <td><code>React.createContext()</code></td>
+            <td>Creates a context with a default value</td>
+        </tr>
+        <tr>
+            <td>Provider</td>
+            <td><code>&lt;Context.Provider value={...}&gt;</code></td>
+            <td>Wraps components that need access to the context value</td>
+        </tr>
+        <tr>
+            <td>Consumer</td>
+            <td><code>useContext(Context)</code></td>
+            <td>Hook that reads the current context value in any child component</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Planned Usage</h3>
+<p>
+    Once implemented, the UserContext would typically store authentication state (token, username,
+    login/logout functions) and wrap the <code>&lt;App /&gt;</code> component in <code>main.jsx</code>,
+    making auth data available throughout the app.
+</p>
+
+<!-- ================================================================
+     SECTION 10: SERVICES
+     ================================================================ -->
+<h1 id="sec10">10. Services – API Configuration</h1>
+<p><strong>File:</strong> <code>/src/services/api.js</code></p>
+
+<p>
+    The API service file creates and exports a pre-configured <strong>Axios</strong> instance for
+    making HTTP requests to the backend server.
+</p>
+
+<pre>
+import axios from "axios";
+
+const API = axios.create({
+    baseURL: "http://localhost:5000/api",
+});
+
+export default API;
+</pre>
+
+<h3>Key Concepts</h3>
+<table>
+    <thead>
+        <tr><th>Concept</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>axios.create()</code></td>
+            <td>Creates a new Axios instance with custom configuration. All requests made through this instance will use the specified <code>baseURL</code> as a prefix.</td>
+        </tr>
+        <tr>
+            <td><code>baseURL</code></td>
+            <td>The base URL prepended to all relative request paths. For example, <code>API.get("/users")</code> would request <code>http://localhost:5000/api/users</code>.</td>
+        </tr>
+        <tr>
+            <td>Default Export</td>
+            <td>The configured Axios instance is exported as the default export, allowing other files to import it as <code>import API from './services/api'</code>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Typical Usage in Components</h3>
+<pre>
+import API from '../services/api';
+
+// GET request
+const response = await API.get("/complaints");
+
+// POST request
+await API.post("/complaints", { title: "...", description: "..." });
+
+// With authentication header
+API.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+</pre>
+
+<!-- ================================================================
+     SECTION 11: STYLING
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec11">11. Styling Architecture</h1>
+
+<p>
+    The project uses <strong>vanilla CSS</strong> with a component-scoped file organization pattern.
+    Each reusable component has its own CSS file stored in the <code>src/styles/</code> directory.
+</p>
+
+<h3>CSS Files Overview</h3>
+<table>
+    <thead>
+        <tr><th>File</th><th>Scope</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>index.css</code></td>
+            <td>Global</td>
+            <td>Base reset: removes default margin, sets global font-family</td>
+        </tr>
+        <tr>
+            <td><code>App.css</code></td>
+            <td>App-level</td>
+            <td>App-level layout: removes body margin, adds top padding for fixed navbar</td>
+        </tr>
+        <tr>
+            <td><code>styles/Navbar.css</code></td>
+            <td>Component</td>
+            <td>NavBar-specific layout, positioning, and hover effects</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Global Styles (index.css)</h3>
+<pre>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+</pre>
+
+<h3>App Styles (App.css)</h3>
+<pre>
+body {
+    margin: 0;
+    padding-top: 80px;
+}
+</pre>
+<p>
+    The <code>padding-top: 80px</code> ensures page content does not get hidden behind the fixed
+    navigation bar.
+</p>
+
+<!-- ================================================================
+     SECTION 12: HOOKS
+     ================================================================ -->
+<h1 id="sec12">12. React Hooks Used in the Project</h1>
+
+<p>
+    React Hooks are functions that allow functional components to use state and other React features.
+    Below is a comprehensive reference of all hooks used in the CitiSolve project.
+</p>
+
+<table>
+    <thead>
+        <tr><th>Hook</th><th>Source</th><th>Used In</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>useState</code></td>
+            <td><code>react</code></td>
+            <td>Login.jsx</td>
+            <td>Creates reactive state variables that trigger re-renders when updated</td>
+        </tr>
+        <tr>
+            <td><code>useNavigate</code></td>
+            <td><code>react-router-dom</code></td>
+            <td>Login.jsx</td>
+            <td>Returns a function to programmatically change the URL/route</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>useState – In Detail</h3>
+<p><strong>Syntax:</strong> <code>const [stateVar, setStateVar] = useState(initialValue);</code></p>
+<ul>
+    <li>Returns an array with two elements: the current state value and a setter function</li>
+    <li>Calling the setter function triggers a component re-render with the new value</li>
+    <li>The initial value is only used during the first render</li>
+</ul>
+<p><strong>Example from Login.jsx:</strong></p>
+<pre>
+const [email, setEmail] = useState("");     // email = "", setEmail updates it
+const [password, setPassword] = useState(""); // password = "", setPassword updates it
+</pre>
+
+<h3>useNavigate – In Detail</h3>
+<p><strong>Syntax:</strong> <code>const navigate = useNavigate();</code></p>
+<ul>
+    <li>Returns a navigate function that changes the current URL without a full page reload</li>
+    <li><code>navigate("/")</code> navigates to the home route</li>
+    <li><code>navigate(-1)</code> goes back one step in browser history</li>
+    <li>Must be called inside a component wrapped by <code>&lt;BrowserRouter&gt;</code></li>
+</ul>
+
+<!-- ================================================================
+     SECTION 13: PROPS REFERENCE
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec13">13. Props Reference Table</h1>
+
+<p>
+    Props (short for "properties") are the mechanism React uses to pass data from parent components
+    to child components. Below is a complete reference of all props used throughout the project.
+</p>
+
+<h2>Component Props</h2>
+<table>
+    <thead>
+        <tr><th>Component</th><th>Receives Props</th><th>Passes Props To</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>App</code></td><td>None</td><td><code>&lt;NavBar /&gt;</code>, <code>&lt;Route&gt;</code> elements</td></tr>
+        <tr><td><code>NavBar</code></td><td>None</td><td><code>&lt;Link&gt;</code> components</td></tr>
+        <tr><td><code>Home</code></td><td>None</td><td>None</td></tr>
+        <tr><td><code>Login</code></td><td>None</td><td>Form elements</td></tr>
+        <tr><td><code>Register</code></td><td>None</td><td>None</td></tr>
+        <tr><td><code>MyComplaints</code></td><td>None</td><td>None</td></tr>
+        <tr><td><code>SubmitComplaints</code></td><td>None</td><td>None</td></tr>
+    </tbody>
+</table>
+
+<h2>JSX Element Props</h2>
+<p>
+    While the custom components do not receive props from their parents, several built-in JSX elements
+    and React Router components receive props within the code:
+</p>
+
+<table>
+    <thead>
+        <tr><th>Element/Component</th><th>Prop</th><th>Value</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>&lt;Route&gt;</code></td><td><code>path</code></td><td>String (e.g., <code>"/"</code>)</td><td>URL pattern to match</td></tr>
+        <tr><td><code>&lt;Route&gt;</code></td><td><code>element</code></td><td>JSX Element</td><td>Component to render when path matches</td></tr>
+        <tr><td><code>&lt;Link&gt;</code></td><td><code>to</code></td><td>String (e.g., <code>"/login"</code>)</td><td>Target navigation URL</td></tr>
+        <tr><td><code>&lt;Link&gt;</code></td><td><code>style</code></td><td>Object</td><td>Inline CSS styles as a JS object</td></tr>
+        <tr><td><code>&lt;input&gt;</code></td><td><code>type</code></td><td><code>"email"</code>, <code>"password"</code></td><td>Input field type for validation</td></tr>
+        <tr><td><code>&lt;input&gt;</code></td><td><code>placeholder</code></td><td>String</td><td>Placeholder text shown when empty</td></tr>
+        <tr><td><code>&lt;input&gt;</code></td><td><code>value</code></td><td>State variable</td><td>Controlled input bound to state</td></tr>
+        <tr><td><code>&lt;input&gt;</code></td><td><code>onChange</code></td><td>Function</td><td>Event handler called on every keystroke</td></tr>
+        <tr><td><code>&lt;form&gt;</code></td><td><code>onSubmit</code></td><td>Function</td><td>Handler called when form is submitted</td></tr>
+        <tr><td><code>&lt;button&gt;</code></td><td><code>type</code></td><td><code>"submit"</code></td><td>Triggers the form's <code>onSubmit</code></td></tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 14: ROUTING
+     ================================================================ -->
+<h1 id="sec14">14. Routing Configuration</h1>
+
+<p>
+    The application uses <strong>React Router DOM v7</strong> for client-side routing. Routes are defined
+    declaratively in <code>App.jsx</code>.
+</p>
+
+<h3>Route Map</h3>
+<table>
+    <thead>
+        <tr><th>URL Path</th><th>Component</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>/</code></td><td><code>Home</code></td><td>Landing page / Dashboard</td></tr>
+        <tr><td><code>/login</code></td><td><code>Login</code></td><td>User login form</td></tr>
+        <tr><td><code>/register</code></td><td><code>Register</code></td><td>User registration form</td></tr>
+        <tr><td><code>/myComplaints</code></td><td><code>MyComplaints</code></td><td>View user's complaints</td></tr>
+        <tr><td><code>/submitComplaints</code></td><td><code>SubmitComplaints</code></td><td>Submit a new complaint</td></tr>
+    </tbody>
+</table>
+
+<h3>Routing Flow Diagram</h3>
+<div class="diagram-box">
+User enters URL or clicks &lt;Link&gt;
+         │
+         ▼
+┌─────────────────────┐
+│   &lt;BrowserRouter&gt;   │  (in main.jsx)
+│   Uses History API   │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│     &lt;Routes&gt;        │  (in App.jsx)
+│  Matches URL path    │
+└─────────┬───────────┘
+          │
+     ┌────┴────────────────────────┐
+     │ path="/"         → Home     │
+     │ path="/login"    → Login    │
+     │ path="/register" → Register │
+     │ path="/myComplaints"        │
+     │                  → MyComp.  │
+     │ path="/submitComplaints"    │
+     │                  → SubComp. │
+     └─────────────────────────────┘
+</div>
+<p class="caption">Figure 3: Routing flow diagram</p>
+
+<!-- ================================================================
+     SECTION 15: STATE MANAGEMENT
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec15">15. State Management Overview</h1>
+
+<p>
+    The CitiSolve project uses a combination of <strong>local component state</strong> and
+    <strong>browser localStorage</strong> for state management.
+</p>
+
+<h3>State Management Layers</h3>
+<table>
+    <thead>
+        <tr><th>Layer</th><th>Mechanism</th><th>Scope</th><th>Persistence</th><th>Used For</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Component State</td>
+            <td><code>useState</code></td>
+            <td>Single component</td>
+            <td>Lost on unmount</td>
+            <td>Form input values (email, password)</td>
+        </tr>
+        <tr>
+            <td>Browser Storage</td>
+            <td><code>localStorage</code></td>
+            <td>Entire application</td>
+            <td>Persists across sessions</td>
+            <td>Authentication token, username</td>
+        </tr>
+        <tr>
+            <td>Context (planned)</td>
+            <td><code>React.createContext</code></td>
+            <td>Component subtree</td>
+            <td>Lost on page refresh</td>
+            <td>User auth state (future)</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>localStorage Keys Used</h3>
+<table>
+    <thead>
+        <tr><th>Key</th><th>Set In</th><th>Read In</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>"token"</code></td>
+            <td>Login.jsx (<code>handleLogin</code>)</td>
+            <td>Navbar.jsx (module scope)</td>
+            <td>JWT authentication token string</td>
+        </tr>
+        <tr>
+            <td><code>"username"</code></td>
+            <td>Login.jsx (<code>handleLogin</code>)</td>
+            <td>Navbar.jsx (module scope)</td>
+            <td>User's email address</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 16: HOW TO RUN
+     ================================================================ -->
+<h1 id="sec16">16. How to Run the Project</h1>
+
+<h3>Prerequisites</h3>
+<ul>
+    <li>Node.js (version 18 or higher)</li>
+    <li>npm (comes with Node.js)</li>
+</ul>
+
+<h3>Installation Steps</h3>
+<pre>
+# 1. Navigate to the project directory
+cd citisolve
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the development server
+npm run dev
+
+# 4. Open in browser
+# Vite will display the local URL (typically http://localhost:5173)
+</pre>
+
+<h3>Available Scripts</h3>
+<table>
+    <thead>
+        <tr><th>Command</th><th>Script</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>npm run dev</code></td><td><code>vite</code></td><td>Starts Vite development server with hot module replacement</td></tr>
+        <tr><td><code>npm run build</code></td><td><code>vite build</code></td><td>Creates an optimised production build in the <code>dist/</code> folder</td></tr>
+        <tr><td><code>npm run lint</code></td><td><code>eslint .</code></td><td>Runs ESLint to check code for style and quality issues</td></tr>
+        <tr><td><code>npm run preview</code></td><td><code>vite preview</code></td><td>Serves the production build locally for testing</td></tr>
+    </tbody>
+</table>
+
+<!-- ================================================================
+     SECTION 17: SUMMARY
+     ================================================================ -->
+<div class="page-break"></div>
+<h1 id="sec17">17. Summary &amp; Conclusion</h1>
+
+<p>
+    The <strong>CitiSolve</strong> project is a React-based single page application designed for civic
+    complaint management. Below is a summary of all the React and web development concepts utilised
+    throughout the project:
+</p>
+
+<h3>React Concepts Used</h3>
+<table>
+    <thead>
+        <tr><th>#</th><th>Concept</th><th>Where Used</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>Functional Components</td><td>All components (App, NavBar, Home, Login, etc.)</td></tr>
+        <tr><td>2</td><td>JSX Syntax</td><td>All component return statements</td></tr>
+        <tr><td>3</td><td>Component Import/Export</td><td>All files use ES6 module system</td></tr>
+        <tr><td>4</td><td>useState Hook</td><td>Login.jsx (form state management)</td></tr>
+        <tr><td>5</td><td>useNavigate Hook</td><td>Login.jsx (programmatic navigation)</td></tr>
+        <tr><td>6</td><td>Controlled Components</td><td>Login.jsx (input value + onChange)</td></tr>
+        <tr><td>7</td><td>Event Handling</td><td>Login.jsx (onSubmit, onChange)</td></tr>
+        <tr><td>8</td><td>Conditional Rendering</td><td>Navbar.jsx (ternary for login/logout)</td></tr>
+        <tr><td>9</td><td>React Fragments</td><td>Login.jsx, Navbar.jsx (&lt;&gt;...&lt;/&gt;)</td></tr>
+        <tr><td>10</td><td>Inline Styles</td><td>Navbar.jsx (style={{}} on Link)</td></tr>
+        <tr><td>11</td><td>Client-Side Routing</td><td>App.jsx (Routes, Route components)</td></tr>
+        <tr><td>12</td><td>Link Component</td><td>Navbar.jsx (navigation links)</td></tr>
+        <tr><td>13</td><td>BrowserRouter</td><td>main.jsx (enables routing)</td></tr>
+        <tr><td>14</td><td>createRoot API</td><td>main.jsx (React 18+ rendering)</td></tr>
+        <tr><td>15</td><td>Context API (planned)</td><td>UserContext.jsx (placeholder)</td></tr>
+        <tr><td>16</td><td>Axios HTTP Client</td><td>services/api.js (API instance)</td></tr>
+        <tr><td>17</td><td>localStorage</td><td>Login.jsx (set), Navbar.jsx (get)</td></tr>
+        <tr><td>18</td><td>CSS Imports</td><td>main.jsx, Navbar.jsx (stylesheet imports)</td></tr>
+        <tr><td>19</td><td>Default Exports</td><td>All component files</td></tr>
+        <tr><td>20</td><td>Prevent Default</td><td>Login.jsx (e.preventDefault())</td></tr>
+    </tbody>
+</table>
+
+<h3>Component Summary</h3>
+<table>
+    <thead>
+        <tr><th>Component</th><th>Type</th><th>File</th><th>Props</th><th>State</th><th>Hooks</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>App</td><td>Functional</td><td>App.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+        <tr><td>NavBar</td><td>Functional</td><td>comonents/Navbar.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+        <tr><td>Home</td><td>Functional</td><td>pages/Home.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+        <tr><td>Login</td><td>Functional</td><td>pages/Login.jsx</td><td>None</td><td>email, password</td><td>useState, useNavigate</td></tr>
+        <tr><td>Register</td><td>Functional</td><td>pages/Register.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+        <tr><td>MyComplaints</td><td>Functional</td><td>pages/MyComplaints.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+        <tr><td>SubmitComplaints</td><td>Functional</td><td>pages/SubmitComplaints.jsx</td><td>None</td><td>None</td><td>None</td></tr>
+    </tbody>
+</table>
+
+<hr />
+
+<p>
+    The project demonstrates a well-organised React application structure with clear separation of
+    concerns across components, pages, services, context, and styles. The codebase follows modern
+    React practices including functional components, hooks, and declarative routing.
+</p>
+
+<div class="footer-note">
+    CitiSolve Project Documentation — Generated August 2026 — Confidential
+</div>
+
+</body>
+</html>
