@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { complaintService } from "../services/api";
 
 const MyComplaints = () => {
   const [complaints, setComplaints] = useState([]);
-  const [filteredComplaints, setFilteredComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
-
-  useEffect(() => {
-    filterComplaints();
-  }, [complaints, statusFilter]);
-
-  const fetchComplaints = async () => {
+  const fetchComplaints = useCallback(async () => {
     try {
       setLoading(true);
       const data = await complaintService.getComplaints();
@@ -29,17 +20,41 @@ const MyComplaints = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const filterComplaints = () => {
+  useEffect(() => {
+    let ignore = false;
+    const load = async () => {
+      try {
+        setLoading(true);
+        const data = await complaintService.getComplaints();
+        if (!ignore) {
+          setComplaints(data);
+          setErrorMessage("");
+        }
+      } catch (err) {
+        if (!ignore) {
+          setErrorMessage("Failed to fetch complaints. Please try again.");
+        }
+        console.error("Error fetching complaints:", err);
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const filteredComplaints = useMemo(() => {
     if (statusFilter === "all") {
-      setFilteredComplaints(complaints);
-    } else {
-      setFilteredComplaints(
-        complaints.filter((c) => c.status === statusFilter)
-      );
+      return complaints;
     }
-  };
+    return complaints.filter((c) => c.status === statusFilter);
+  }, [complaints, statusFilter]);
 
   const getStatusClass = (status) => {
     switch (status) {

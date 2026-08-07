@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { complaintService } from "../services/api";
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
-  const [filteredComplaints, setFilteredComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,15 +11,7 @@ const AdminDashboard = () => {
   const [updatingId, setUpdatingId] = useState(null);
   const [statusForms, setStatusForms] = useState({});
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
-
-  useEffect(() => {
-    applyFilters();
-  }, [complaints, searchQuery, statusFilter, categoryFilter]);
-
-  const fetchComplaints = async () => {
+  const fetchComplaints = useCallback(async () => {
     try {
       setLoading(true);
       const data = await complaintService.getComplaints();
@@ -32,9 +23,36 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const applyFilters = () => {
+  useEffect(() => {
+    let ignore = false;
+    const load = async () => {
+      try {
+        setLoading(true);
+        const data = await complaintService.getComplaints();
+        if (!ignore) {
+          setComplaints(data);
+          setErrorMessage("");
+        }
+      } catch (err) {
+        if (!ignore) {
+          setErrorMessage("Failed to fetch complaints. Please try again.");
+        }
+        console.error("Error fetching complaints:", err);
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const filteredComplaints = useMemo(() => {
     let list = complaints;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -53,8 +71,8 @@ const AdminDashboard = () => {
     if (categoryFilter !== "all") {
       list = list.filter((c) => c.category === categoryFilter);
     }
-    setFilteredComplaints(list);
-  };
+    return list;
+  }, [complaints, searchQuery, statusFilter, categoryFilter]);
 
   const initStatusForm = (id) => {
     if (!statusForms[id]) {

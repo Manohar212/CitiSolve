@@ -33,7 +33,7 @@ export const apiFetch = async (endpoint, options = {}) => {
     }
     return await res.json();
   } catch (err) {
-    throw new Error(err.message || "Network error occurred");
+    throw new Error(err.message || "Network error occurred", { cause: err });
   }
 };
 

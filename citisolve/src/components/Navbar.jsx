@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getUserRole } from "../services/api";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
   const submitRef = useRef(null);
   const myComplaintsRef = useRef(null);
 
-  const updateGlider = () => {
+  const updateGlider = useCallback(() => {
     if (location.pathname === "/submit-complaint" && submitRef.current) {
       setGliderStyle({
         left: submitRef.current.offsetLeft,
@@ -28,16 +28,16 @@ const Navbar = () => {
     } else {
       setGliderStyle((prev) => ({ ...prev, opacity: 0 }));
     }
-  };
+  }, [location.pathname]);
 
   useEffect(() => {
     updateGlider();
-  }, [location.pathname, userRole]);
+  }, [updateGlider, userRole]);
 
   useEffect(() => {
     window.addEventListener("resize", updateGlider);
     return () => window.removeEventListener("resize", updateGlider);
-  }, [location.pathname]);
+  }, [updateGlider]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
